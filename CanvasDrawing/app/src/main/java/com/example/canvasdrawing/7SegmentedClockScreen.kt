@@ -22,6 +22,9 @@ fun SevenSegmentDigit(
         val w = size.width
         val h = size.height
         val t = w * 0.12f // thickness
+        val m = t / 3 // ответ был 4 при t = 12
+        val nm = t / 2 // ответ был 6 при t = 12
+
 
         fun segOn(show: Boolean, path: Path) {
             if (show) {
@@ -33,16 +36,16 @@ fun SevenSegmentDigit(
 
         // Define segment shapes
         val top = Path().apply {
-            moveTo(t, 0f); lineTo(w - t, 0f); lineTo(w - 2*t, t); lineTo(2*t, t); close()
+            moveTo(t, 0f); lineTo(w - t, 0f); lineTo(w - 2*t, t + nm); lineTo(2*t, t + nm); close()
         }
         val upperLeft = Path().apply {
-            moveTo(0f, t); lineTo(t, 2*t); lineTo(t, h/2 - t); lineTo(0f, h/2 - 2*t); close()
+            moveTo(0f, t); lineTo(t + m, 2*t); lineTo(t + m, h/2 - 2*t); lineTo(0f, h/2 - t); close()
         }
         val upperRight = Path().apply {
-            moveTo(w, t); lineTo(w - t, 2*t); lineTo(w - t, h/2 - t); lineTo(w, h/2 - 2*t); close()
+            moveTo(w, t); lineTo(w - (t + m), 2*t); lineTo(w - (t + m), h/2 - 2*t); lineTo(w, h/2 - t); close()
         }
         val middle = Path().apply {
-            moveTo(t, h/2 - t); lineTo(w - t, h/2 - t); lineTo(w - 2*t, h/2 + t); lineTo(2*t, h/2 + t); close()
+            moveTo(t, h/2); lineTo(t*2, h/2 - t + m); lineTo(w - 2*t, h/2 - t + m); lineTo(w - t, h/2); lineTo(w - 2*t, h/2 + t - m); lineTo(t*2, h/2 + t - m); close()
         }
         val lowerLeft = Path().apply {
             moveTo(0f, h/2 + t); lineTo(t, h/2 + 2*t); lineTo(t, h - 2*t); lineTo(0f, h - t); close()
