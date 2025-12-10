@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -26,22 +28,13 @@ import java.time.LocalTime
 fun DigitalClock(
     modifier: Modifier = Modifier.fillMaxSize(),
     color: Color = Color(0xFF00FF55),
-    is24h: Boolean = false
+    hour: Int,
+    minute: Int,
+    amPm: String
 ) {
-    val time = remember { mutableStateOf(LocalTime.now()) }
 
-    // Обновление каждую секунду
-    LaunchedEffect(Unit) {
-        while (true) {
-            time.value = LocalTime.now()
-            delay(1000)
-        }
-    }
 
-    val hour = if (is24h) time.value.hour else time.value.hour % 12
-    val minute = time.value.minute
 
-    val amPm = if (time.value.hour < 12) "AM" else "PM"
 
     Row(
         modifier = modifier.fillMaxSize(),
@@ -98,4 +91,10 @@ fun AmPmLabel(
         modifier = modifier
             .padding(start = 8.dp)
     )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun ClockPreview() {
+    DigitalClock(hour = 10, minute = 15, amPm = "PM", modifier = Modifier.padding(16.dp))
 }
