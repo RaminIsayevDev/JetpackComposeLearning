@@ -4,10 +4,9 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,7 +24,7 @@ import java.time.LocalTime
 
 @Composable
 fun DigitalClock(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxSize(),
     color: Color = Color(0xFF00FF55),
     is24h: Boolean = false
 ) {
@@ -49,21 +48,24 @@ fun DigitalClock(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SevenSegmentDigit(hour / 10, color, Modifier.size(100.dp, 180.dp))
-        Spacer(Modifier.width(10.dp))
+        // Используем веса (weight) вместо фиксированных размеров, чтобы часы масштабировались
+        // Пропорции: Цифра (100), Пробел (10/20), Двоеточие (20)
 
-        SevenSegmentDigit(hour % 10, color, Modifier.size(100.dp, 180.dp))
-        Spacer(Modifier.width(20.dp))
+        SevenSegmentDigit(hour / 10, color, Modifier.weight(10f).aspectRatio(100f/180f))
+        Spacer(Modifier.weight(1f))
 
-        Colon(color, Modifier.size(20.dp, 120.dp))
-        Spacer(Modifier.width(20.dp))
+        SevenSegmentDigit(hour % 10, color, Modifier.weight(10f).aspectRatio(100f/180f))
+        Spacer(Modifier.weight(2f))
 
-        SevenSegmentDigit(minute / 10, color, Modifier.size(100.dp, 180.dp))
-        Spacer(Modifier.width(10.dp))
+        Colon(color, Modifier.weight(2f).aspectRatio(20f/120f))
+        Spacer(Modifier.weight(2f))
 
-        SevenSegmentDigit(minute % 10, color, Modifier.size(100.dp, 180.dp))
+        SevenSegmentDigit(minute / 10, color, Modifier.weight(10f).aspectRatio(100f/180f))
+        Spacer(Modifier.weight(1f))
 
-        Spacer(Modifier.width(20.dp))
+        SevenSegmentDigit(minute % 10, color, Modifier.weight(10f).aspectRatio(100f/180f))
+
+        Spacer(Modifier.weight(2f))
         AmPmLabel(amPm, color)
     }
 

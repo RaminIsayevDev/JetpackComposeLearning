@@ -16,12 +16,12 @@ fun SevenSegmentDigit(
     digit: Int,
     color: Color = Color(0xFF00FF66),
     modifier: Modifier = Modifier
-        .size(100.dp, 180.dp)
+        .size(200.dp, 280.dp)
 ) {
     Canvas(modifier.fillMaxSize()) {
         val w = size.width
         val h = size.height
-        val t = w * 0.12f // thickness
+        val t = w * 0.11f // thickness
         val m = t / 3 // ответ был 4 при t = 12
         val nm = t / 2 // ответ был 6 при t = 12
 
@@ -36,7 +36,7 @@ fun SevenSegmentDigit(
 
         // Define segment shapes
         val top = Path().apply {
-            moveTo(t, 0f); lineTo(w - t, 0f); lineTo(w - 2*t, t + nm); lineTo(2*t, t + nm); close()
+            moveTo(t , 0f); lineTo(w - t, 0f); lineTo(w - 2*t, t + nm); lineTo(2*t, t + nm); close()
         }
         val upperLeft = Path().apply {
             moveTo(0f, t); lineTo(t + m, 2*t); lineTo(t + m, h/2 - 2*t); lineTo(0f, h/2 - t); close()
@@ -48,13 +48,13 @@ fun SevenSegmentDigit(
             moveTo(t, h/2); lineTo(t*2, h/2 - t + m); lineTo(w - 2*t, h/2 - t + m); lineTo(w - t, h/2); lineTo(w - 2*t, h/2 + t - m); lineTo(t*2, h/2 + t - m); close()
         }
         val lowerLeft = Path().apply {
-            moveTo(0f, h/2 + t); lineTo(t, h/2 + 2*t); lineTo(t, h - 2*t); lineTo(0f, h - t); close()
+            moveTo(0f, h/2 + t); lineTo(t + m, h/2 + 2*t); lineTo(t + m, h - 2*t); lineTo(0f, h - t); close()
         }
         val lowerRight = Path().apply {
-            moveTo(w, h/2 + t); lineTo(w - t, h/2 + 2*t); lineTo(w - t, h - 2*t); lineTo(w, h - t); close()
+            moveTo(w, h/2 + t); lineTo(w - (t + m), h/2 + 2*t); lineTo(w - (t + m), h - 2*t); lineTo(w, h - t); close()
         }
         val bottom = Path().apply {
-            moveTo(t, h - t); lineTo(w - t, h - t); lineTo(w - 2*t, h); lineTo(2*t, h); close()
+            moveTo(t, h); lineTo(w - t, h); lineTo(w - 2*t, h - (t + nm)); lineTo(2*t, h - (t + nm)); close()
         }
 
         val segments = mapOf(
